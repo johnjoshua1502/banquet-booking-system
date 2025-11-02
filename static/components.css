@@ -1,0 +1,17 @@
+/* components.css - messages, form hints, small components */
+.flash { padding:10px 12px; border-radius:8px; margin-bottom:12px; font-weight:600; }
+.flash.success{ background: #ecfdf5; color:#065f46; border:1px solid #bbf7d0 }
+.flash.error{ background: #fff1f2; color:#9f1239; border:1px solid #fecdd3 }
+.flash.info{ background:#eff6ff; color:#1e3a8a; border:1px solid #bfdbfe }
+
+.empty-state{
+  text-align:center; padding:40px 20px; color:var(--muted);
+  border-radius:10px; background: linear-gradient(180deg,#fff,#fcfcfd); border:1px dashed #eef2f6;
+}
+
+/* small responsive tweaks */
+@media (max-width:600px){
+  .navlinks{ display:none } /* keep header compact on phone */
+  .container{ padding:14px }
+  .hall-card{ padding:12px }
+}

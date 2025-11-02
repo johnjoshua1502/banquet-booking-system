@@ -1,0 +1,124 @@
+/* forms.css - slight enhancements for accessibility, focus, hover and responsiveness */
+
+:root{
+    --primary:#2563eb; /* blue */
+    --accent:#06b6d4;  /* teal */
+    --input-border:#e5e7eb;
+    --muted:#6b7280;
+    --radius:8px;
+    --gap:12px;
+}
+
+*{box-sizing:border-box}
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:var(--gap);
+}
+
+/* labels */
+label{
+    font-weight:600;
+    color:#111827;
+    font-size:14px;
+    display:block;
+}
+
+/* group rows */
+.form-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap; /* wrap on small screens */
+}
+.form-row .col{
+    flex:1;
+    min-width:0; /* prevents overflow with long content */
+}
+
+/* inputs, selects, textarea */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea{
+    padding:10px 12px;
+    border-radius:var(--radius);
+    border:1px solid var(--input-border);
+    background:#fff;
+    font-size:14px;
+    color:#111827;
+    outline:none;
+    transition:box-shadow .12s ease, border-color .12s ease, transform .06s ease;
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+}
+
+/* placeholder color */
+input::placeholder,
+textarea::placeholder{
+    color:var(--muted);
+    opacity:0.9;
+}
+
+/* hover + focus-visible for accessibility */
+input:hover, select:hover, textarea:hover{ border-color:rgba(37,99,235,0.12) }
+:focus-visible{
+    outline:none;
+    box-shadow:0 6px 20px rgba(37,99,235,0.08);
+    border-color:var(--primary);
+}
+
+/* for browsers that don't support focus-visible fallback */
+input:focus, select:focus, textarea:focus{
+    box-shadow:0 6px 20px rgba(37,99,235,0.08);
+    border-color:var(--primary);
+}
+
+/* disabled / read-only states */
+input:disabled, textarea:disabled, select:disabled{
+    background:#f9fafb;
+    color:var(--muted);
+    cursor:not-allowed;
+    opacity:0.9;
+}
+
+/* buttons */
+.btn{
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:var(--radius);
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    transition:transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+    text-decoration:none;
+    line-height:1;
+}
+.btn:hover{ transform:translateY(-1px); box-shadow:0 6px 20px rgba(37,99,235,0.12) }
+.btn:active{ transform:translateY(0) scale(.997) }
+.btn:disabled{ opacity:.6; cursor:not-allowed; transform:none }
+
+/* secondary variant */
+.btn.secondary{
+    background:#f3f4f6;
+    color:#111827;
+    border:1px solid #e6e7ea;
+}
+.btn.secondary:hover{ box-shadow:0 6px 18px rgba(15,23,42,0.04) }
+
+/* small accessibility hint for required fields */
+label .required{ color:#ef4444; margin-left:4px; font-weight:700 }
+
+/* compact spacing for tight forms */
+.form-compact{ gap:8px }
+.form-compact .btn{ padding:8px 12px }
+
+/* respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important }
+}

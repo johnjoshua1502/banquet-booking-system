@@ -1,0 +1,26 @@
+/* tables.css - admin tables, list styling */
+.table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.table th, .table td{
+  padding:12px 10px;
+  border-bottom:1px solid #eef2f6;
+  text-align:left;
+}
+.table th{
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  color:white;font-weight:600;border-top-left-radius:8px;border-top-right-radius:8px
+}
+.table tr:hover td{ background:#fbfdff }
+.table .actions{ display:flex; gap:8px; align-items:center }
+.select-sm{ padding:6px 8px;border-radius:6px;border:1px solid #e5e7eb;background:#fff; }
+
+/* status badges */
+.badge {
+  display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px;
+}
+.badge.pending{ background: #fffbeb; color:#92400e; border:1px solid #fcefc7 }
+.badge.confirmed{ background:#ecfdf5; color:#065f46; border:1px solid #bbf7d0 }
+.badge.rejected{ background:#fff1f2; color:#9f1239; border:1px solid #fecdd3 }

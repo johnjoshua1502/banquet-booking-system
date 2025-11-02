@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Book banquet halls for weddings, parties, and events. Modern, easy-to-use system.">
+  <title>Banquet Booking</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='tables.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='components.css') }}">
+</head>
+<body>
+  <header class="header" role="banner">
+    <div class="brand">Banquet Booking System</div>
+    <nav class="navlinks" role="navigation" aria-label="Main Navigation">
+      <a href="{{ url_for('home') }}">Home</a>
+      {% if session.get('user_id') %}
+        <a href="{{ url_for('user_dashboard') }}">My Bookings</a>
+        <a href="{{ url_for('logout') }}">Logout ({{ session.get('user_name') }})</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">User Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+      <a href="{{ url_for('admin_login') }}">Admin</a>
+    </nav>
+  </header>
+  <main tabindex="-1">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="messages" aria-live="polite">
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

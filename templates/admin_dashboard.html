@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h2 class="h1">Admin — All Bookings</h2>
+  <h2 class="h1">Admin Dashboard</h2>
+
+<div class="kpi-row">
+  <div class="kpi total">
+    <div class="num">{{ stats['total'] }}</div>
+    <div class="label">Total Bookings</div>
+  </div>
+  <div class="kpi pending">
+    <div class="num">{{ stats['pending'] }}</div>
+    <div class="label">Pending</div>
+  </div>
+  <div class="kpi confirmed">
+    <div class="num">{{ stats['confirmed'] }}</div>
+    <div class="label">Confirmed</div>
+  </div>
+  <div class="kpi rejected">
+    <div class="num">{{ stats['rejected'] }}</div>
+    <div class="label">Rejected</div>
+  </div>
+</div>
+
+  <table class="table">
+    <thead>
+      <tr><th>ID</th><th>User</th><th>Hall</th><th>Date</th><th>Time</th><th>Guests</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      {% for b in bookings %}
+      <tr>
+        <td>{{ b['id'] }}</td>
+        <td>{{ b['user_name'] }}</td>
+        <td>{{ b['hall_name'] }}</td>
+        <td>{{ b['date'] }}</td>
+        <td>{{ b['time_slot'] }}</td>
+        <td>{{ b['guests'] }}</td>
+        <td>
+          {% if b['status']=='Pending' %}
+            <span class="badge pending">Pending</span>
+          {% elif b['status']=='Confirmed' %}
+            <span class="badge confirmed">Confirmed</span>
+          {% else %}
+            <span class="badge rejected">Rejected</span>
+          {% endif %}
+        </td>
+        <td class="actions">
+          <form method="POST" action="{{ url_for('admin_update', booking_id=b['id']) }}">
+            <select class="select-sm" name="status">
+              <option {% if b['status']=='Pending' %}selected{% endif %}>Pending</option>
+              <option {% if b['status']=='Confirmed' %}selected{% endif %}>Confirmed</option>
+              <option {% if b['status']=='Rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+            <button class="btn" type="submit">Update</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

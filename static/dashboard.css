@@ -1,0 +1,241 @@
+/* dashboard.css - user/admin side panels and cards */
+.halls-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
+
+.hall-card{
+  background:linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  border-radius:14px;
+  padding:0 0 16px 0;
+  box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+  transition: transform .15s, box-shadow .15s;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:340px;
+}
+.hall-card:hover{ transform: translateY(-6px); box-shadow:0 12px 30px rgba(16,24,40,0.09) }
+.hall-image{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  background: #f3f4f6;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.hall-image:hover {
+  transform: scale(1.05);
+}
+
+.hall-image-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.hall-image-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.hall-image-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.hall-title{ font-weight:700; color:var(--primary); margin:14px 0 6px 0; font-size:18px; padding:0 16px; }
+.hall-meta{ font-size:13px; color:var(--muted); padding:0 16px; }
+.hall-description{ padding:0 16px; margin:10px 0 0 0; flex:1; }
+.book-btn{ margin:18px 16px 0 16px; }
+
+/* user bookings list */
+.bookings-list{ display:flex; flex-direction:column; gap:12px }
+.booking-item{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;
+}
+.booking-left{display:flex;gap:12px;align-items:center}
+.booking-right{display:flex;gap:8px;align-items:center}
+
+/* Hero Welcome Section */
+.hero-welcome {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 20px;
+  padding: 48px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: 0 12px 30px rgba(43, 88, 118, 0.15);
+}
+
+.hero-welcome::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.1;
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+.fancy-letter {
+  font-size: 3.2rem;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  font-family: 'Playfair Display', serif;
+  display: inline-block;
+  margin: 0 2px;
+  animation: glow 2s ease-in-out infinite alternate;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.main-title {
+  font-size: 2.4rem;
+  margin-top: 10px;
+  line-height: 1.4;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.fancy-text {
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+  font-weight: 700;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 2px 8px rgba(255,215,0,0.3);
+  }
+  to {
+    text-shadow: 0 4px 12px rgba(255,215,0,0.6);
+  }
+}
+
+/* Add a subtle animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-title {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.hero-subtitle {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* small utilities */
+.kpi-row{ display:flex; gap:12px; margin-bottom:14px; flex-wrap:wrap }
+.kpi{ background:white; border-radius:10px; padding:12px 16px; box-shadow:0 6px 18px rgba(16,24,40,0.04); min-width:160px }
+.kpi .num{ font-size:20px; font-weight:700; color:var(--primary) }
+
+/* === Admin Dashboard KPI Cards === */
+.kpi-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi {
+  flex: 1;
+  min-width: 180px;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.kpi .num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.kpi .label {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Color accents for status cards */
+.kpi.total {
+  border-top: 4px solid var(--accent);
+}
+
+.kpi.pending {
+  border-top: 4px solid #f59e0b; /* amber */
+}
+
+.kpi.confirmed {
+  border-top: 4px solid #10b981; /* green */
+}
+
+.kpi.rejected {
+  border-top: 4px solid #ef4444; /* red */
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
+  .kpi-row {
+    flex-direction: column;
+  }
+}

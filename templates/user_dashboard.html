@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="header">
+    <h2 class="h1">My Bookings</h2>
+    <a href="{{ url_for('home') }}" class="btn">Book Another Hall</a>
+  </div>
+  
+  <div class="bookings-list">
+    {% if bookings %}
+      {% for b in bookings %}
+        <div class="booking-item">
+          <div class="booking-left">
+            <div>
+              <div class="booking-title">{{ b['hall_name'] }}</div>
+              <div class="booking-details">
+                <span>Booking #{{ b['id'] }}</span>
+                <span>•</span>
+                <span>{{ b['guests'] }} Guests</span>
+              </div>
+              <div class="booking-time">{{ b['date'] }} • {{ b['time_slot'] }}</div>
+            </div>
+          </div>
+          <div class="booking-right">
+            {% if b['status']=='Pending' %}
+              <span class="badge pending">Pending</span>
+            {% elif b['status']=='Confirmed' %}
+              <span class="badge confirmed">Confirmed</span>
+            {% else %}
+              <span class="badge rejected">Rejected</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <p>You have no bookings yet — go book a hall!</p>
+        <a href="{{ url_for('home') }}" class="btn">Book Now</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
