@@ -9,26 +9,35 @@ It provides separate dashboards for **users** and **admins**, allowing easy book
 
 ### 👥 User Features
 - Register and log in to the system
-- Browse available banquet halls with images and descriptions
-- Make new booking requests
+- Browse available banquet halls with images, capacity, and price
+- Book halls by selecting:
+  - Date
+  - Time slot
+  - Number of guests
+  - **Services** (Catering, Decoration, Lighting, Sound System, Photography)
 - View booking history and current booking status (Pending / Confirmed / Rejected)
+- Responsive and user-friendly interface
+
+---
 
 ### 🧑‍💼 Admin Features
 - Admin login with credentials
 - Dashboard view showing:
   - Total bookings
-  - Confirmed bookings
-  - Pending bookings
-  - Rejected bookings
-- Ability to approve or reject booking requests
+  - Confirmed / Pending / Rejected counts
+  - **Service usage statistics** (how many times each service was selected)
+- View all user bookings with hall name and services selected
+- Approve or reject bookings directly
+- Clean, visual layout with summary cards and statistics
 
 ---
 
 ## 🧠 Tech Stack
-- **Frontend:** HTML, CSS
+- **Frontend:** HTML, CSS (custom responsive design)
 - **Backend:** Flask (Python)
 - **Database:** SQLite
 - **Templates:** Jinja2
+- **Password Security:** Werkzeug (hashed passwords)
 - **Version Control:** Git & GitHub
 
 ---
