@@ -88,39 +88,62 @@ def user_dashboard():
 # ---------- Book a hall ----------
 @app.route("/book/<int:hall_id>", methods=["GET", "POST"])
 def book(hall_id):
+    # 1️⃣ Make sure user is logged in
     if not session.get("user_id"):
-        flash("Please login to book.", "warning")
+        flash("Please login to book a hall.", "warning")
         return redirect(url_for("login"))
+
+    # 2️⃣ Get the hall details
     conn = get_db_connection()
     hall = conn.execute("SELECT * FROM halls WHERE id=?", (hall_id,)).fetchone()
     conn.close()
+
     if not hall:
         flash("Hall not found.", "danger")
         return redirect(url_for("home"))
+
+    # 3️⃣ Handle form submission
     if request.method == "POST":
-        # validate form inputs
         date = request.form.get("date")
         time_slot = request.form.get("time_slot")
         guests = request.form.get("guests")
+
+        # Read selected services (multiple checkboxes)
+        services_selected = request.form.getlist("services")
+        services_str = ", ".join(services_selected) if services_selected else ""
+
+        # Validation checks
         if not date or not guests:
-            flash("Please provide a date and number of guests.", "danger")
+            flash("Please fill all required fields.", "danger")
             return render_template("book.html", hall=hall)
+
         try:
             guests_int = int(guests)
             if guests_int < 1:
                 raise ValueError()
         except Exception:
-            flash("Please enter a valid number of guests.", "danger")
+            flash("Invalid number of guests.", "danger")
             return render_template("book.html", hall=hall)
+
+        # 4️⃣ Insert into DB
         user_id = session["user_id"]
         conn = get_db_connection()
-        conn.execute("INSERT INTO bookings (user_id, hall_id, date, time_slot, guests) VALUES (?, ?, ?, ?, ?)",
-                     (user_id, hall_id, date, time_slot, guests_int))
+        conn.execute(
+            """
+            INSERT INTO bookings (user_id, hall_id, date, time_slot, guests, services)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (user_id, hall_id, date, time_slot, guests_int, services_str)
+        )
         conn.commit()
         conn.close()
-        flash("Booking request submitted. Admin will confirm.", "success")
+
+        flash("Booking request submitted successfully!", "success")
         return redirect(url_for("user_dashboard"))
+
+    # 5️⃣ Render form
     return render_template("book.html", hall=hall)
+
 
 # ---------- Admin login page (same login used, but we can also have direct admin login) ----------
 @app.route("/admin-login", methods=["GET", "POST"])
@@ -151,29 +174,53 @@ def admin_dashboard():
 
     conn = get_db_connection()
 
-    # get all bookings
+    # Get all bookings with joined user and hall data
     bookings = conn.execute("""
-        SELECT b.*, u.name as user_name, h.name as hall_name
+        SELECT b.*, u.name AS user_name, h.name AS hall_name
         FROM bookings b
-        JOIN users u ON b.user_id=u.id
-        JOIN halls h ON b.hall_id=h.id
+        JOIN users u ON b.user_id = u.id
+        JOIN halls h ON b.hall_id = h.id
         ORDER BY b.created_at DESC
     """).fetchall()
 
-    # get count stats
-    stats = conn.execute("""
+    # Get main booking stats (total, pending, confirmed, rejected)
+    stats_row = conn.execute("""
         SELECT
-            COUNT(*) as total,
-            SUM(CASE WHEN status='Pending' THEN 1 ELSE 0 END) as pending,
-            SUM(CASE WHEN status='Confirmed' THEN 1 ELSE 0 END) as confirmed,
-            SUM(CASE WHEN status='Rejected' THEN 1 ELSE 0 END) as rejected
+            COUNT(*) AS total,
+            SUM(CASE WHEN status='Pending' THEN 1 ELSE 0 END) AS pending,
+            SUM(CASE WHEN status='Confirmed' THEN 1 ELSE 0 END) AS confirmed,
+            SUM(CASE WHEN status='Rejected' THEN 1 ELSE 0 END) AS rejected
         FROM bookings
     """).fetchone()
 
     conn.close()
 
-    # send stats to the HTML page
+    # Convert to dictionary
+    stats = {
+        "total": stats_row["total"],
+        "pending": stats_row["pending"],
+        "confirmed": stats_row["confirmed"],
+        "rejected": stats_row["rejected"],
+    }
+
+    # ----------------------------
+    # New section: Service statistics
+    # ----------------------------
+    service_counts = {}
+    for booking in bookings:
+        if booking["services"]:  # if services exist for this booking
+            for service in booking["services"].split(","):
+                service = service.strip()
+                if service:
+                    service_counts[service] = service_counts.get(service, 0) + 1
+
+    stats["services"] = service_counts  # add to stats dictionary
+
+    # ----------------------------
+    # Render to template
+    # ----------------------------
     return render_template("admin_dashboard.html", bookings=bookings, stats=stats)
+
 
 
 # ---------- Admin update booking status ----------

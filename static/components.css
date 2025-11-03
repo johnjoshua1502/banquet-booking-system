@@ -9,9 +9,70 @@
   border-radius:10px; background: linear-gradient(180deg,#fff,#fcfcfd); border:1px dashed #eef2f6;
 }
 
+/* Service tags styling */
+.services-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.service-tag {
+  background: #f3f4f6;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.no-services {
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Service stats in admin dashboard */
+.service-stats {
+  margin: 2rem 0;
+}
+
+.service-stats h3 {
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+/* Compact services list for tables */
+.services-list.compact {
+  margin: 0;
+  gap: 0.25rem;
+}
+
+.services-list.compact .service-tag {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* KPI modifications for services */
+.kpi.service {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.kpi.service .num {
+  color: #3b82f6;
+}
+
 /* small responsive tweaks */
 @media (max-width:600px){
   .navlinks{ display:none } /* keep header compact on phone */
   .container{ padding:14px }
   .hall-card{ padding:12px }
+  
+  .services-list {
+    gap: 0.25rem;
+  }
+  
+  .service-tag {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+  }
 }

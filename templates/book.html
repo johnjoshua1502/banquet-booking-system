@@ -8,27 +8,37 @@
       <h2 class="h1">Book: {{ hall['name'] }}</h2>
       <p class="small">Capacity: {{ hall['capacity'] }} | Price: ₹{{ hall['price'] }}</p>
       <form method="POST">
-        <div class="form-row">
-          <label for="date">Date <span class="required">*</span></label>
-          <input id="date" type="date" name="date" required>
-        </div>
-        <div class="form-row">
-          <label for="time_slot">Time slot</label>
-          <select id="time_slot" name="time_slot">
-            <option>Morning (9am-1pm)</option>
-            <option>Afternoon (2pm-6pm)</option>
-            <option>Evening (7pm-11pm)</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="guests">Guests <span class="required">*</span></label>
-          <input id="guests" type="number" name="guests" min="1" required>
-        </div>
-        <div class="mt-8">
-          <button class="btn" type="submit">Request Booking</button>
-          <a class="btn secondary" href="{{ url_for('home') }}">Cancel</a>
-        </div>
-      </form>
+  <div class="form-row">
+    <label for="date">Date <span class="required">*</span></label>
+    <input id="date" type="date" name="date" required>
+  </div>
+  <div class="form-row">
+    <label for="time_slot">Time slot</label>
+    <select id="time_slot" name="time_slot">
+      <option>Morning (9am-1pm)</option>
+      <option>Afternoon (2pm-6pm)</option>
+      <option>Evening (7pm-11pm)</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label>Services</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="services" value="catering"> Catering</label>
+      <label><input type="checkbox" name="services" value="decoration"> Decoration</label>
+      <label><input type="checkbox" name="services" value="DJ"> DJ / Sound System</label>
+      <label><input type="checkbox" name="services" value="lighting"> Lighting</label>
+      <label><input type="checkbox" name="services" value="photography"> Photography</label>
+    </div>
+  </div>
+  <div class="form-row">
+    <label for="guests">Guests <span class="required">*</span></label>
+    <input id="guests" type="number" name="guests" min="1" required>
+  </div>
+  <div class="mt-8">
+    <button class="btn" type="submit">Request Booking</button>
+    <a class="btn secondary" href="{{ url_for('home') }}">Cancel</a>
+  </div>
+</form>
     </div>
   {% endif %}
 </div>

@@ -23,9 +23,31 @@
   </div>
 </div>
 
+  <div class="service-stats">
+    <h3>Service Usage</h3>
+    <div class="kpi-row">
+      {% for service, count in stats['services'].items() %}
+      <div class="kpi service">
+        <div class="num">{{ count }}</div>
+        <div class="label">{{ service|title }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
   <table class="table">
     <thead>
-      <tr><th>ID</th><th>User</th><th>Hall</th><th>Date</th><th>Time</th><th>Guests</th><th>Status</th><th>Action</th></tr>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Hall</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Guests</th>
+        <th>Services</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
     </thead>
     <tbody>
       {% for b in bookings %}
@@ -36,6 +58,17 @@
         <td>{{ b['date'] }}</td>
         <td>{{ b['time_slot'] }}</td>
         <td>{{ b['guests'] }}</td>
+        <td>
+          {% if b['services'] %}
+            <div class="services-list compact">
+              {% for service in b['services'].split(',') if service.strip() %}
+                <span class="service-tag">{{ service.strip()|title }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            <span class="no-services">—</span>
+          {% endif %}
+        </td>
         <td>
           {% if b['status']=='Pending' %}
             <span class="badge pending">Pending</span>

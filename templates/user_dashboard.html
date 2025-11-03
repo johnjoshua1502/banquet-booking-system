@@ -19,6 +19,18 @@
                 <span>{{ b['guests'] }} Guests</span>
               </div>
               <div class="booking-time">{{ b['date'] }} • {{ b['time_slot'] }}</div>
+              <div class="booking-services">
+                <strong>Services:</strong>
+                {% if b['services'] %}
+                  <div class="services-list">
+                    {% for service in b['services'].split(',') if service.strip() %}
+                      <span class="service-tag">{{ service.strip()|title }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <span class="no-services">—</span>
+                {% endif %}
+              </div>
             </div>
           </div>
           <div class="booking-right">
